@@ -50,6 +50,25 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #000; 
+            color: #00FF00; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .warning-sign {
+            color: #00FF00; 
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -58,8 +77,48 @@
         <form id="signinForm" action="/login" method="POST">
             <input type="text" id="username" name="username" placeholder="Username">
             <input type="password" id="password" name="password" placeholder="Password">
-            <button type="submit">Sign In</button>
+            <button type="submit" onclick="handleLogin()">Sign In</button>
         </form>
     </div>
+
+    <div class="modal" id="modal">
+        <div class="warning-sign">⚠</div> 
+        <p class="bold-text">Invalid username or password. Please try again.</p>
+        <button type="button" onclick="closeModal()">OK</button>
+    </div>
+
+    <script>
+        // Use modal
+        function showModal() {
+            document.getElementById("modal").style.display = "block";
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function handleLogin() {
+            const usernameInput = document.querySelector('#username').value;
+            const passwordInput = document.querySelector('#password').value;
+
+            // Send a POST request to the server for login validation
+            fetch('/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: usernameInput, password: passwordInput }),
+            })
+            .then(response => {
+                if (response.status === 200) {
+                    // Successful login
+                    window.location.href = "admin.html";
+                } else {
+                    showModal();
+                }
+            });
+        }
+    </script>
 </body>
 </html>
