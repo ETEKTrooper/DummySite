@@ -26,7 +26,7 @@ app.post('/login', (req, res) => {
     // Replace this with a proper authentication mechanism, e.g., checking the database
     // For demonstration, we're using hardcoded values
     if (username === 'Estefanus' && password === 'Mikalonte') {
-        res.redirect('/admin.html');
+        res.status(302).redirect('/admin.html');
     } else {
         // Replace this with your actual error handling logic
         res.status(401).send('Unauthorized');
