@@ -26,28 +26,35 @@
             border: 2px solid #05ff26;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            position: relative;
+            top: 14em; /* Adjust the top value to move the popup down */
+            margin-left: 3em; /* Add 2em margin to the right */
         }
 
         h2 {
-            font-size: 28px;
+            font-size: 31px; /* Increased font size for 'Congratulations!' */
+        }
+
+        p {
+            font-size: 24px; /* Font size for 'It was about time' */
         }
 
         .code-word {
-            font-size: 24px;
+            font-size: 28px; /* Font size for the code word */
             font-weight: bold;
             color: #05ff26;
+        }
+
+        .smiley {
+            font-size: 36px; /* Font size for the smiley face */
         }
     </style>
 </head>
 <body>
-        <div class="popup">
-        <br><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
-        <br><br><br><br><br>
+    <div class="popup">
         <h2>Congratulations!</h2>
-        <p>You've successfully logged in.</p>
-        <p>Your code word is <span class="code-word">SecureSquirrel</span></p>
+        <p>It was about time <span class="smiley">😄</span></p>
+        <p>Your code word is <span class="code-word">SecretSquirrel</span></p>
     </div>
 </body>
 </html>
