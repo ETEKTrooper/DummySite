@@ -74,10 +74,10 @@
 <body>
     <div class="container">
         <h2>Admin Sign In</h2>
-        <form id="signinForm" action="/login" method="POST">
-            <input type="text" id="username" name="username" placeholder="Username">
-            <input type="password" id="password" name="password" placeholder="Password">
-            <button type="submit" onclick="handleLogin()">Sign In</button>
+        <form id="signinForm">
+            <input type="text" id="username" placeholder="Username">
+            <input type="password" id="password" placeholder="Password">
+            <button type="button" id="signinButton">Sign In</button>
         </form>
     </div>
 
@@ -88,21 +88,23 @@
     </div>
 
     <script>
-        // Use modal
+        document.addEventListener('DOMContentLoaded', () => {
+            const signinButton = document.getElementById('signinButton');
+            signinButton.addEventListener('click', handleLogin);
+        });
+
         function showModal() {
-            document.getElementById("modal").style.display = "block";
+            document.getElementById('modal').style.display = 'block';
         }
 
-        // Close modal
         function closeModal() {
-            document.getElementById("modal").style.display = "none";
+            document.getElementById('modal').style.display = 'none';
         }
 
         function handleLogin() {
             const usernameInput = document.querySelector('#username').value;
             const passwordInput = document.querySelector('#password').value;
 
-            // Send a POST request to the server for login validation
             fetch('/login', {
                 method: 'POST',
                 headers: {
@@ -113,7 +115,7 @@
             .then(response => {
                 if (response.status === 200) {
                     // Successful login
-                    window.location.href = "admin.html";
+                    window.location.href = 'admin.html';
                 } else {
                     showModal();
                 }
