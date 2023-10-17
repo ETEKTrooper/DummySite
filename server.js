@@ -15,18 +15,23 @@ db.serialize(function () {
 
 // Middleware for parsing JSON
 app.use(bodyParser.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Serve static files (your HTML, CSS, images, etc.)
 app.use(express.static('public'));
 
 // Define routes
+app.get('/', (req, res) => {
+    res.sendFile(__dirname + '/public/index.html');
+});
+
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
-    
-    // Replace this with a proper authentication mechanism, e.g., checking the database
+
+    // Replace this with a database query to check if the user exists
     // For demonstration, we're using hardcoded values
     if (username === 'Estefanus' && password === 'Mikalonte') {
-        res.status(302).redirect('/admin.html');
+        res.redirect('/admin.html');
     } else {
         // Replace this with your actual error handling logic
         res.status(401).send('Unauthorized');
