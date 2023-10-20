@@ -1,39 +1,63 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-
+const session = require('express-session');
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Database setup
-const db = new sqlite3.Database('userdb.sqlite');
+// Configure EJS as the template engine
+app.set('view engine', 'ejs');
+app.set('views', __dirname);
 
-// Create a table for users (if it doesn't exist)
-db.serialize(function () {
-    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)");
-});
-
-// Middleware for parsing JSON
-app.use(bodyParser.json());
-app.use(express.urlencoded({ extended: true }));
-
-// Serve static files (your HTML, CSS, images, etc.)
+// Serve static files (CSS, images, etc.) from the 'public' directory
 app.use(express.static('public'));
 
-// Define routes
+// Use express-session for managing user sessions
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
+
+// Middleware for parsing JSON and URL-encoded data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// In-memory user data (replace with a database in a production environment)
+const users = [
+    { username: 'Estefanus', password: 'Mikalonte' },
+    // Add more user data as needed
+];
+
+// Function to check if the user exists
+function authenticateUser(username, password) {
+    return users.find(user => user.username === username && user.password === password);
+}
+
+// Route to render the main index.html page
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+// Route to handle login
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    // Replace this with a database query to check if the user exists
-    // For demonstration, we're using hardcoded values
-    if (username === 'Estefanus' && password === 'Mikalonte') {
-        res.redirect('/admin.html');
+    // Authenticate the user
+    const user = authenticateUser(username, password);
+
+    if (user) {
+        // Store the user's username in the session
+        req.session.username = username;
+        res.redirect('/admin');
     } else {
-        // Replace this with your actual error handling logic
+        res.status(401).send('Unauthorized');
+    }
+});
+
+// Route to render the admin.ejs page
+app.get('/admin', (req, res) => {
+    if (req.session.username) {
+        res.render('admin', { username: req.session.username });
+    } else {
         res.status(401).send('Unauthorized');
     }
 });
