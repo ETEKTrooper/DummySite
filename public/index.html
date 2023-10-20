@@ -1,83 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Secret Sign In</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
-            background-image: url('images/bg3.jpg');
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            width: 300px;
-            padding: 20px;
-            background-color: #ffffff; /* White background */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(15, 8, 8, 0.1);
-            margin-top: 2em; /* Adjust the top margin to move the sign-in box down */
-            margin-left: -2em; /* Move the sign-in box one space to the left */
-            border: 4px solid #02ff02; /* Fluorescent green border */
-        }
-
-        h2 {
-            color: #000; /* Black text color */
-        }
-
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            color: #000; /* Black text color for Username and Password labels */
-        }
-
-        button {
-            width: 100%;
-            background-color: #010201;
-            color: #f3f7f3; /* Fluorescent green text */
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background-color: #59b93c;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: #000;
-            color: #13f013;
-            padding: 30px; /* Increased padding for a larger modal */
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .warning-sign {
-            color: #fc0606;
-            font-size: 48px;
-            margin-bottom: 19px;
-        }
-    </style>
+    <!-- Add your meta tags and styles -->
 </head>
 <body>
     <div class="container">
@@ -123,7 +47,8 @@
             .then(response => {
                 if (response.status === 200) {
                     // Successful login
-                    window.location.href = 'admin.html';
+                    // Redirect the user to the /admin page
+                    window.location.href = '/admin';
                 } else {
                     showModal();
                 }
