@@ -1,44 +1,35 @@
 const express = require('express');
-const sqlite3 = require('sqlite3').verbose();
-const bodyParser = require('body-parser');
-
 const app = express();
 const port = process.env.PORT || 3000;
+const ejs = require('ejs');
 
-// Database setup
-const db = new sqlite3.Database('userdb.sqlite');
-
-// Create a table for users (if it doesn't exist)
-db.serialize(function () {
-    db.run("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT)");
-});
+app.set('view engine', 'ejs'); // Set EJS as the template engine
+app.set('views', __dirname + '/views'); // Specify the directory for your views
 
 // Middleware for parsing JSON
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Serve static files (your HTML, CSS, images, etc.)
+// Serve static files (your CSS, images, etc.)
 app.use(express.static('public'));
 
-// Define routes
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
+// Define a route that renders the admin page
+app.get('/admin', (req, res) => {
+    res.render('admin');
 });
 
+// Define a route for login
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
-    // Replace this with a database query to check if the user exists
-    // For demonstration, we're using hardcoded values
+    // Replace this with your authentication logic
     if (username === 'Estefanus' && password === 'Mikalonte') {
-        res.redirect('/admin.html');
+        res.redirect('/admin');
     } else {
-        // Replace this with your actual error handling logic
         res.status(401).send('Unauthorized');
     }
 });
 
-// Start the server
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
