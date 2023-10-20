@@ -7,7 +7,7 @@ app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
-app.get('/admin', (req, res) => {
+app.get('/public/admin', (req, res) => {
     // Read the content of the secret message HTML file
     const secretMessageContent = fs.readFileSync(__dirname + '/secret-message.html', 'utf8');
     
