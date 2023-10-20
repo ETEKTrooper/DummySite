@@ -1,9 +1,12 @@
 const express = require('express');
 const app = express();
 const port = process.env.PORT || 3000;
+const path = require('path'); // Require the 'path' module
 
 app.set('view engine', 'ejs'); // Set EJS as the template engine
-app.set('views', __dirname + '/views'); // Specify the directory for your views
+
+// Set the 'views' directory to the directory where server.js is located
+app.set('views', path.join(__dirname));
 
 // Middleware for parsing JSON
 app.use(express.json());
@@ -11,11 +14,6 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files (your CSS, images, etc.)
 app.use(express.static('public'));
-
-// Serve the main index.html
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/public/index.html');
-});
 
 // Define a route that renders the admin page
 app.get('/admin', (req, res) => {
