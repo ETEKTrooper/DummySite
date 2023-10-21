@@ -63,12 +63,13 @@
             display: none;
             position: fixed;
             top: 50%;
-            left: 50%;
+            left: calc(50% - 1em);
             transform: translate(-50%, -50%);
             background-color: #000;
             color: #13f013;
             padding: 30px; /* Increased padding for a larger modal */
             border-radius: 10px;
+            border: 5px solid #ff3807ef;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
@@ -91,7 +92,7 @@
 
     <div class="modal" id="modal">
         <div class="warning-sign">⚠</div>
-        <p class="bold-text">Gotcha!!. I know what you are thinking...</p>
+        <p class="bold-text">🔒Wrong password! The vault is still secure, but your imagination is commendable!🤔</p>
         <button type="button" onclick="closeModal()">Good Luck</button>
     </div>
 
