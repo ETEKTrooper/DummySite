@@ -51,7 +51,7 @@ app.post('/login', (req, res) => {
 app.get('/admin', (req, res) => {
     // Sensitive data (replace with actual data retrieval logic)
     const sensitiveData = {
-        codeWord: 'SecretSquirrel',
+        codeWord: 'OperationCupcake',
     };
 
     // Render the 'admin' template with sensitive data
