@@ -2,7 +2,8 @@ const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const path = require('path');
-const ejs = require('ejs'); // Add this line to require EJS
+const ejs = require('ejs');
+const session = require('express-session'); // Add this line to require express-session
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -22,6 +23,13 @@ app.use(express.urlencoded({ extended: true }));
 // Serve static files (your HTML, CSS, images, etc.)
 app.use(express.static('public'));
 
+// Set up express-session
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: false,
+}));
+
 // Set the 'views' directory and EJS as the view engine
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -35,26 +43,24 @@ app.post('/login', (req, res) => {
     const { username, password } = req.body;
     console.log(`Received login request with username: ${username} and password: ${password}`);
 
-    // Your existing logic here...
-
-    // Replace this with your actual logic to check the username and password
     if (username === 'Estefanus' && password === 'Mikalonte') {
+        req.session.isAuthenticated = true; // set session variable
         res.redirect('admin');
     } else {
-        // Replace this with your actual error handling logic
         res.status(401).send('Unauthorized');
     }
 });
 
-
 // Render the admin page with sensitive data
 app.get('/admin', (req, res) => {
-    // Sensitive data (replace with actual data retrieval logic)
+    if (!req.session.isAuthenticated) { // check session variable
+        return res.status(401).send('Unauthorized');
+    }
+
     const sensitiveData = {
         codeWord: 'OperationCupcake',
     };
 
-    // Render the 'admin' template with sensitive data
     res.render('admin', { data: sensitiveData });
 });
 
