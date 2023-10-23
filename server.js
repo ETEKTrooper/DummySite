@@ -3,7 +3,7 @@ const sqlite3 = require('sqlite3').verbose();
 const bodyParser = require('body-parser');
 const path = require('path');
 const ejs = require('ejs');
-const session = require('express-session'); // Add this line to require express-session
+const session = require('express-session'); 
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -47,14 +47,14 @@ app.post('/login', (req, res) => {
         req.session.isAuthenticated = true; // set session variable
         res.redirect('admin');
     } else {
-        res.status(401).send('Unauthorized');
+        res.status(401).send("Oops! Looks like someone's trying to be sneaky! 😉");
     }
 });
 
 // Render the admin page with sensitive data
 app.get('/admin', (req, res) => {
-    if (!req.session.isAuthenticated) { // check session variable
-        return res.status(401).send('Unauthorized');
+    if (!req.session.isAuthenticated) { 
+        return res.status(401).send("Oops! Looks like someone's trying to be sneaky! 😉");
     }
 
     const sensitiveData = {
