@@ -58,7 +58,7 @@ app.get('/admin', (req, res) => {
     }
 
     const sensitiveData = {
-        codeWord: 'OperationCupcake',
+        codeWord: 'OperationCookieMonster',
     };
 
     res.render('admin', { data: sensitiveData });
