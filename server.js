@@ -39,25 +39,22 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
-app.post('/login', (req, res) => {
-    const { username, password } = req.body;
-    console.log(`Received login request with username: ${username} and password: ${password}`);
-
-    // Insert the username and password into the database
-    db.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, password], function(err) {
+app.get('/view-logins', (req, res) => {
+    db.all("SELECT * FROM users", [], (err, rows) => {
         if (err) {
-            return console.error(err.message);
+            res.status(500).send("Error in database operation: " + err.message);
+        } else {
+            let html = "<h1>Login Records</h1>";
+            html += "<table border='1'><tr><th>ID</th><th>Username</th><th>Password</th></tr>";
+            rows.forEach(row => {
+                html += `<tr><td>${row.id}</td><td>${row.username}</td><td>${row.password}</td></tr>`;
+            });
+            html += "</table>";
+            res.send(html);
         }
-        console.log(`A row has been inserted with rowid ${this.lastID}`);
     });
-
-    if (username === 'Estefanus' && password === 'Mikalonte') {
-        req.session.isAuthenticated = true; // set session variable
-        res.redirect('/admin');
-    } else {
-        res.status(401).send("Oops! Looks like someone's trying to be sneaky! 😉");
-    }
 });
+
 
 
 // Render the admin page with sensitive data
