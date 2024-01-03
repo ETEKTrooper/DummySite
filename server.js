@@ -43,13 +43,22 @@ app.post('/login', (req, res) => {
     const { username, password } = req.body;
     console.log(`Received login request with username: ${username} and password: ${password}`);
 
+    // Insert the username and password into the database
+    db.run("INSERT INTO users (username, password) VALUES (?, ?)", [username, password], function(err) {
+        if (err) {
+            return console.error(err.message);
+        }
+        console.log(`A row has been inserted with rowid ${this.lastID}`);
+    });
+
     if (username === 'Estefanus' && password === 'Mikalonte') {
         req.session.isAuthenticated = true; // set session variable
-        res.redirect('admin');
+        res.redirect('/admin');
     } else {
         res.status(401).send("Oops! Looks like someone's trying to be sneaky! 😉");
     }
 });
+
 
 // Render the admin page with sensitive data
 app.get('/admin', (req, res) => {
